@@ -1,0 +1,50 @@
+td {
+    border: 2px black solid;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    text-align: center;
+    background-color: blue;
+}
+
+.container {
+    border: 5px solid lightseagreen;
+}
+
+.clicked {
+    background-color: rgb(124, 240, 101);
+}
+
+
+header button {
+    text-align: center;
+    padding: 5px;
+    left: 50px;
+}
+
+header div {
+    background-color: cyan;
+    border: 2px solid orange;
+    display: inline-block;
+    width: 45px;
+    text-align: center;
+}
+
+body {
+    background-color: rgb(35, 182, 72);
+}
+
+header h2 {
+    font-size: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header h2 span {
+    color: red;
+}
+
+
+header h3 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
