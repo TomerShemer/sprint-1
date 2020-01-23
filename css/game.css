@@ -1,42 +1,61 @@
+body {
+    text-align: center;
+    background: linear-gradient(179deg, #0076ff, #3fe125, #ffa01b, #ff2400, #5500ff, #0081ff);
+    background-size: 1200% 1200%;
+    -webkit-animation: AnimationName 30s ease infinite;
+    -moz-animation: AnimationName 30s ease infinite;
+    animation: AnimationName 30s ease infinite;
+}
+
 td {
     border: 2px black solid;
     width: 25px;
     height: 25px;
     cursor: pointer;
-    text-align: center;
-    background-color: blue;
-}
-
-.container {
-    border: 5px solid lightseagreen;
+    background-color: rgb(136, 200, 252);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .clicked {
-    background-color: rgb(124, 240, 101);
+    background-color: rgb(64, 243, 73);
 }
 
+.hinted {
+    background-color: pink;
+}
+
+.container {
+    border: 5px solid black;
+    border-radius: 10px;
+    display: inline-block;
+    background-color: blue;
+    
+}
 
 header button {
-    text-align: center;
     padding: 5px;
     left: 50px;
 }
 
 header div {
-    background-color: cyan;
+    background-color: rgb(139, 241, 255);
     border: 2px solid orange;
     display: inline-block;
     width: 45px;
-    text-align: center;
 }
 
-body {
-    background-color: rgb(35, 182, 72);
-}
 
 header h2 {
-    font-size: 30px;
+    font-size: 50px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-decoration: underline red;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    margin: 0px;
+}
+
+.hint-btn {
+    margin: 15px;
 }
 
 header h2 span {
@@ -46,5 +65,48 @@ header h2 span {
 
 header h3 {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 0px;
 }
 
+header .easy {
+    color: lightgreen;
+    background-color: seagreen;
+}
+
+header .medium {
+    color: yellow;
+    background-color: darkorange;
+}
+
+header .hard {
+    color: pink;
+    background-color: red;
+}
+
+.mat {
+    padding: 20px;
+    background-color: rgb(202, 165, 84);
+    display: inline-block;
+    border-radius: 15px;
+    margin: 15px
+}
+
+.best-times {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:50% 0%}
+    50%{background-position:50% 100%}
+    100%{background-position:50% 0%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:50% 0%}
+    50%{background-position:50% 100%}
+    100%{background-position:50% 0%}
+}
+@keyframes AnimationName {
+    0%{background-position:50% 0%}
+    50%{background-position:50% 100%}
+    100%{background-position:50% 0%}
+}

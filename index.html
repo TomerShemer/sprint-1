@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,31 +8,42 @@
     <link rel="stylesheet" href="css/game.css">
     <title>Document</title>
 </head>
+
 <body onload="initGame()">
     <header>
         <h2><span>M</span>ine <span>S</span>weeper</h2><br>
         <h3>Difficulty:</h3>
-        <select class="difficulty-selector">
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-        </select>
+        <button class="easy" onclick="setDifficulty(4)">Easy</button>
+        <button class="medium" onclick="setDifficulty(8)">Medium</button>
+        <button class="hard" onclick="setDifficulty(12)">Hard</button>
         <br>
+        <button class="safe-click" onclick="safeClick()">Safe-clicks: <span>3</span></button>
+        <button class="hint-btn" onclick="hintCell()">Hints: <span>3</span></button>
+        <br>
+        <h3>Lives: 💖 X <span class="lives">3</span></h3>
         <br>
         <div class="timer">0</div>
-        <button onclick="resetGame()">😃</button>
+        <button class="smiley" onclick="resetGame()">😃</button>
         <div class="marks-counter"></div>
     </header>
 
-    <table>
-        <tbody class="container" oncontextmenu="return false;">
+    <div class="mat">
+        <table>
+            <tbody class="container" oncontextmenu="return false;" ondrag="return false;">
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+    <div class="best-times">
+        Easy - <span class="easy">0</span>s<br>
+        Medium - <span class="medium">0</span>s<br>
+        Hard - <span class="hard">0</span>s
+    </div>
 
 
 
-
+    <script src="./util/util.js"></script>
     <script src="./js/game.js"></script>
 </body>
+
 </html>
