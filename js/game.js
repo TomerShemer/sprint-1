@@ -24,7 +24,7 @@ var gGame = {
 var gBoard;
 var gGameInterval;
 var isFirstClick;
-var isHintClicked = false;
+var isHintClicked;
 
 var livesLeft;
 var marksLeft;
@@ -44,6 +44,7 @@ function initGame() {
     document.querySelector('.marks-counter').innerText = marksLeft;
     gGame.isOn = true;
     isFirstClick = true;
+    isHintClicked = false;
     document.querySelector('.best-times .easy').innerText = localStorage.getItem('easy')
     document.querySelector('.best-times .medium').innerText = localStorage.getItem('medium')
     document.querySelector('.best-times .hard').innerText = localStorage.getItem('hard')
@@ -79,19 +80,14 @@ function renderBoard(board) {
             class="${className}" oncontextmenu="cellMarked(${i}, ${j})">`
             if (board[i][j].isMarked) strHtml += FLAG;
             if (board[i][j].isShown) {
-                if (board[i][j].isMine) {
-                    strHtml += MINE
-                } else if (board[i][j].minesAroundCount === 0) {
-                    strHtml += EMPTY
-                } else {
-                    strHtml += board[i][j].minesAroundCount
-                }
+                if (board[i][j].isMine) strHtml += MINE
+                else if (board[i][j].minesAroundCount === 0) strHtml += EMPTY
+                else strHtml += board[i][j].minesAroundCount
             }
             strHtml += '</td>'
         }
         strHtml += '</tr>'
     }
-
     document.querySelector('.container').innerHTML = strHtml;
 }
 
@@ -102,56 +98,16 @@ function setMinesNegsCount(board) {
 
             var currCell = board[i][j]
             if (currCell.isMine) {
-                // Try to shorten, getting undefined for non existing cells (even with 'if (currCell)')
-                if (i === 0) {
-                    if (j === 0) {
-                        board[i][j + 1].minesAroundCount++
-                        board[i + 1][j + 1].minesAroundCount++
-                    } else if (j === board[0].length - 1) {
-                        board[i][j - 1].minesAroundCount++
-                        board[i + 1][j - 1].minesAroundCount++
-                    } else {
-                        board[i][j - 1].minesAroundCount++
-                        board[i][j + 1].minesAroundCount++
-                        board[i + 1][j - 1].minesAroundCount++
-                        board[i + 1][j + 1].minesAroundCount++
-                    }
-                    board[i + 1][j].minesAroundCount++
-                } else if (i === board.length - 1) {
-                    if (j === 0) {
-                        board[i - 1][j + 1].minesAroundCount++;
-                        board[i][j + 1].minesAroundCount++
-                    } else if (j === board[0].length - 1) {
-                        board[i - 1][j - 1].minesAroundCount++;
-                        board[i][j - 1].minesAroundCount++;
-                    } else {
-                        board[i - 1][j - 1].minesAroundCount++;
-                        board[i - 1][j + 1].minesAroundCount++;
-                        board[i][j - 1].minesAroundCount++;
-                        board[i][j + 1].minesAroundCount++;
-                    }
-                    board[i - 1][j].minesAroundCount++
-                } else {
-                    if (j === 0) {
-                        board[i - 1][j + 1].minesAroundCount++
-                        board[i][j + 1].minesAroundCount++;
-                        board[i + 1][j + 1].minesAroundCount++;
-                    } else if (j === board[0].length - 1) {
-                        board[i - 1][j - 1].minesAroundCount++;
-                        board[i][j - 1].minesAroundCount++;
-                        board[i + 1][j - 1].minesAroundCount++
+                var kStartIdx = (i - 1 > 0) ? i - 1 : 0;
+                var kEndIdx = (i + 1 < board.length) ? i + 1 : board.length - 1;
+                var lStartIdx = (j - 1 > 0) ? j - 1 : 0;
+                var lEndIdx = (j + 1 < board.length) ? j + 1 : board.length - 1;
+                for (var k = kStartIdx; k <= kEndIdx; k++) {
+                    for (var l = lStartIdx; l <= lEndIdx; l++) {
+                        if (k === i && l === j) continue
+                        board[k][l].minesAroundCount++
 
-                    } else {
-
-                        board[i - 1][j - 1].minesAroundCount++;
-                        board[i - 1][j + 1].minesAroundCount++;
-                        board[i][j - 1].minesAroundCount++;
-                        board[i][j + 1].minesAroundCount++;
-                        board[i + 1][j - 1].minesAroundCount++
-                        board[i + 1][j + 1].minesAroundCount++
                     }
-                    board[i + 1][j].minesAroundCount++
-                    board[i - 1][j].minesAroundCount++
                 }
             }
         }
@@ -181,8 +137,6 @@ function cellClicked(elCell, i, j) {
                 if (gBoard[k][l].isShown) continue
                 gBoard[k][l].isShown = true;
                 gBoard[k][l].isHinted = true;
-
-
             }
         }
         setTimeout(function () {
@@ -193,7 +147,6 @@ function cellClicked(elCell, i, j) {
                     gBoard[k][l].isHinted = false;
                 }
             }
-
             elCell.classList.remove('clicked')
             renderBoard(gBoard)
         }, 1000);
@@ -235,15 +188,16 @@ function cellMarked(i, j) {
         currCell.isMarked = true;
         document.querySelector('.marks-counter').innerText--
         marksLeft--
+        checkGameOver(i, j)
     }
     renderBoard(gBoard);
-    checkGameOver(i, j)
 }
 
 
 function checkGameOver(i, j) {
     if (gBoard[i][j].isMine && !gBoard[i][j].isMarked) {
         //check lives
+
         if (livesLeft > 1) {
             livesLeft--
             document.querySelector('.lives').innerText = livesLeft;
@@ -378,4 +332,8 @@ function saveBestTime(size) {
     bestTime += +localStorage.getItem(difficulty)
     if (bestTime < gGame.secsPassed && bestTime > 0) return
     localStorage.setItem(difficulty, gGame.secsPassed)
+}
+
+function isEmptyCell(coord) {
+    return gBoard[coord.i][coord.j] === ''
 }

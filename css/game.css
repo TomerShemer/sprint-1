@@ -16,6 +16,12 @@ td {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.smiley {
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+}
+
 .clicked {
     background-color: rgb(64, 243, 73);
 }
@@ -41,7 +47,8 @@ header div {
     background-color: rgb(139, 241, 255);
     border: 2px solid orange;
     display: inline-block;
-    width: 45px;
+    padding: 10px 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 
@@ -54,9 +61,11 @@ header h2 {
     margin: 0px;
 }
 
-.hint-btn {
-    margin: 15px;
+.hint-btn, .safe-click {
+    margin: 15px 10px;
+    padding: 10px;
 }
+
 
 header h2 span {
     color: red;
